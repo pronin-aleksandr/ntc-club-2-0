@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Клуб руководителей 2.0 — КП BITOBE для НТЦ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700&family=PT+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --white:#FFFFFF; --black:#000000; --grey:#7A899A; --copper:#BE9176;
+  --blue:#182D8D; --navy:#19194C; --light-blue:#739FD2; --teal:#218787;
+  --light-grey:#C8C8C8; --bg-grey:#F5F5F5; --dark-grey:#64676A;
+  --sans:'Onest',system-ui,sans-serif; --serif:'PT Serif',Georgia,serif;
+  --fs-h1:clamp(28px,2.6vw + 12px,48px);
+  --fs-h2:clamp(21px,1.4vw + 12px,30px);
+  --fs-h3:clamp(17px,0.7vw + 13px,20px);
+  --sp-1:8px; --sp-2:16px; --sp-3:24px; --sp-4:clamp(20px,3vw,32px);
+  --sp-6:clamp(28px,4vw,44px); --sp-8:clamp(36px,5vw,56px);
+  --container:880px; --sidebar-w:260px;
+}
+*{box-sizing:border-box;box-shadow:none!important;text-shadow:none!important;}
+html{scroll-behavior:smooth;}
+html,body{margin:0;padding:0;background:var(--white);color:var(--black);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+.kicker{font-size:13px;font-weight:600;color:var(--grey);text-transform:uppercase;letter-spacing:.08em;margin:0 0 var(--sp-3);}
+.h1{font-family:var(--sans);font-weight:500;font-size:var(--fs-h1);line-height:1.14;letter-spacing:-.02em;margin:0;overflow-wrap:break-word;}
+.h2{font-family:var(--sans);font-weight:500;font-size:var(--fs-h2);line-height:1.2;letter-spacing:-.015em;margin:0;}
+.h3{font-family:var(--sans);font-weight:600;font-size:var(--fs-h3);line-height:1.3;margin:0;}
+.body{font-size:16px;line-height:1.65;margin:0;}
+.small{font-size:14px;line-height:1.55;color:var(--dark-grey);margin:0;}
+em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--copper);}
+.section--dark em{color:var(--light-blue);}
+.container{max-width:var(--container);margin:0 auto;padding:0 var(--sp-3);width:100%;}
+
+/* Inline text links */
+a.inline-link,.card-link{color:var(--blue);text-decoration:underline;text-decoration-color:var(--light-grey);text-underline-offset:3px;font-weight:500;}
+a.inline-link:hover,.card-link:hover{text-decoration-color:var(--blue);}
+.card-link{display:inline-block;margin-top:10px;font-size:13px;font-weight:600;text-decoration:none;}
+.card-link::after{content:' →';}
+.section--dark a.inline-link{color:var(--light-blue);text-decoration-color:rgba(255,255,255,.35);}
+.section--dark .card-link{color:var(--light-blue);}
+
+/* SIDEBAR NAVIGATION */
+.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;overflow-y:auto;background:var(--white);border-right:1px solid var(--light-grey);padding:28px 20px 40px;z-index:60;}
+.sidebar__brand{margin-bottom:26px;display:block;line-height:0;}
+.sidebar__brand svg{height:20px;width:auto;}
+.sidebar__doc-label{font-size:12px;color:var(--grey);margin:0 0 22px;}
+.sidebar__group-label{font-size:11px;font-weight:700;color:var(--copper);text-transform:uppercase;letter-spacing:.08em;margin:20px 0 6px;padding:0 10px;}
+.sidebar__group-label:first-of-type{margin-top:0;}
+.sidebar nav{display:flex;flex-direction:column;gap:1px;}
+.sidebar a{display:block;padding:6px 10px;border-radius:5px;font-size:13.5px;color:var(--dark-grey);text-decoration:none;line-height:1.35;}
+.sidebar a:hover{color:var(--blue);}
+.sidebar a.is-active{background:var(--bg-grey);color:var(--blue);font-weight:600;}
+
+.nav-toggle{display:none;position:fixed;top:14px;right:14px;z-index:70;width:42px;height:42px;border-radius:50%;background:var(--navy);color:var(--white);align-items:center;justify-content:center;border:none;cursor:pointer;font-size:19px;line-height:1;}
+.nav-scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.32);z-index:55;}
+.nav-scrim.is-open{display:block;}
+
+.main{margin-left:var(--sidebar-w);}
+@media(max-width:960px){
+  .sidebar{transform:translateX(-104%);transition:transform .25s ease;box-shadow:0 0 40px rgba(0,0,0,.18);}
+  .sidebar.is-open{transform:translateX(0);}
+  .main{margin-left:0;}
+  .nav-toggle{display:flex;}
+}
+
+/* SECTIONS — height follows content, no forced viewport slides */
+.section{padding:var(--sp-8) 0;}
+.section--tight{padding:var(--sp-6) 0;}
+.section--dark{background:var(--navy);color:var(--white);}
+.section--dark .h1,.section--dark .h2,.section--dark .h3,.section--dark .body{color:var(--white);}
+.section--dark .small{color:var(--light-grey);}
+.section--dark .kicker{color:var(--light-blue);}
+.section--band{background:var(--bg-grey);padding:var(--sp-6) 0;}
+
+/* Cover */
+.cover{background:var(--navy);color:var(--white);padding:88px 0 72px;}
+.cover .h1{font-size:clamp(34px,3.4vw + 14px,64px);max-width:15ch;margin-bottom:var(--sp-4);}
+.cover .h3{font-weight:400;color:var(--light-grey);max-width:38ch;margin-bottom:var(--sp-6);}
+.cover .lead{font-family:var(--serif);font-style:italic;font-size:clamp(17px,1vw + 13px,22px);line-height:1.5;max-width:52ch;color:var(--white);border-top:1px solid rgba(255,255,255,.25);padding-top:var(--sp-4);}
+.cover .kp-label{margin-top:var(--sp-6);font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--copper);}
+
+/* Generic layout helpers */
+.stack-2{display:flex;flex-direction:column;gap:var(--sp-2);}
+.stack-3{display:flex;flex-direction:column;gap:var(--sp-3);}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-6);}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-4);}
+@media(max-width:760px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+
+/* Cards */
+.card{background:var(--bg-grey);padding:var(--sp-4);}
+.section--dark .card{background:rgba(255,255,255,.07);}
+.card__label{font-size:13px;font-weight:600;color:var(--copper);text-transform:uppercase;letter-spacing:.06em;margin-bottom:var(--sp-2);}
+.card ul{margin:var(--sp-2) 0 0;padding-left:18px;}
+.card li{margin-bottom:6px;}
+.card p+p{margin-top:var(--sp-2);}
+
+/* Numbered list */
+.numbered{display:flex;flex-direction:column;}
+.numbered__item{display:grid;grid-template-columns:60px 1fr;gap:var(--sp-3);padding:var(--sp-3) 0;border-top:1px solid var(--light-grey);align-items:baseline;}
+.numbered__item:first-child{border-top:0;}
+.numbered__n{font-family:var(--serif);font-style:italic;font-size:26px;color:var(--copper);line-height:1;}
+@media(max-width:600px){.numbered__item{grid-template-columns:1fr;gap:6px;}}
+
+/* Stream cards */
+.stream-row{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--sp-4);}
+.stream{background:var(--bg-grey);padding:var(--sp-4);}
+.stream__tag{font-size:13px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.stream__title{font-weight:600;font-size:var(--fs-h3);margin-bottom:var(--sp-2);}
+.stream__price{margin-top:var(--sp-3);padding-top:var(--sp-3);border-top:1px solid var(--light-grey);}
+.stream__price .lbl{font-size:12px;color:var(--grey);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;}
+.stream__price .val{font-family:var(--serif);font-style:italic;color:var(--copper);font-size:17px;}
+@media(max-width:760px){.stream-row{grid-template-columns:1fr;}}
+
+/* Timeline */
+.tl__step{display:grid;grid-template-columns:150px 1fr;gap:var(--sp-4);padding:var(--sp-4) 0;border-top:1px solid var(--light-grey);}
+.tl__step:first-child{border-top:0;}
+.tl__meta{font-size:13px;color:var(--grey);}
+.tl__badge{display:inline-block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--copper);margin-bottom:4px;}
+.tl__title{font-weight:600;font-size:var(--fs-h3);margin-bottom:6px;}
+@media(max-width:640px){.tl__step{grid-template-columns:1fr;gap:6px;}}
+
+/* Process flow */
+.flow{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--sp-2);}
+.flow__step{background:var(--bg-grey);padding:var(--sp-3) var(--sp-2);text-align:left;}
+.flow__step .n{font-family:var(--serif);font-style:italic;color:var(--copper);font-size:20px;display:block;margin-bottom:4px;}
+.flow__step .t{font-weight:600;font-size:14px;margin-bottom:4px;}
+.flow__step .d{font-size:13px;color:var(--dark-grey);line-height:1.4;}
+@media(max-width:760px){.flow{grid-template-columns:1fr 1fr;}}
+@media(max-width:460px){.flow{grid-template-columns:1fr;}}
+
+/* Vertical connector flow */
+.vflow{display:flex;flex-direction:column;align-items:center;max-width:560px;margin:0 auto;}
+.vflow__block{width:100%;background:var(--bg-grey);padding:var(--sp-4);text-align:center;}
+.vflow__block .body{color:var(--black);}
+.vflow__arrow{font-size:20px;color:var(--copper);padding:6px 0;}
+.vflow__label{font-size:13px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+
+/* Table */
+.table{width:100%;border-collapse:collapse;}
+.table th{text-align:left;font-size:13px;font-weight:600;color:var(--grey);text-transform:uppercase;letter-spacing:.05em;padding:0 var(--sp-2) var(--sp-2);border-bottom:1px solid var(--light-grey);}
+.table td{padding:var(--sp-2);border-bottom:1px solid var(--light-grey);vertical-align:top;font-size:15px;}
+.table tbody tr:last-child td{border-bottom:0;}
+.table td.num,.table th.num{text-align:right;}
+.table td.price{font-family:var(--serif);font-style:italic;color:var(--copper);font-size:18px;white-space:nowrap;text-align:right;}
+
+/* KPI levels */
+.level{background:var(--bg-grey);padding:var(--sp-4);}
+.level__n{font-family:var(--serif);font-style:italic;color:var(--copper);font-size:15px;margin-bottom:6px;display:block;}
+
+/* Recommendation box */
+.rec{background:var(--bg-grey);padding:var(--sp-6);}
+.rec__step{display:flex;gap:var(--sp-3);padding:var(--sp-3) 0;border-top:1px solid var(--light-grey);}
+.rec__step:first-child{border-top:0;padding-top:0;}
+.rec__mark{font-family:var(--serif);font-style:italic;color:var(--copper);font-size:20px;line-height:1.3;flex:none;width:26px;}
+
+/* Signature / closing */
+.sig{margin-top:var(--sp-6);}
+.sig .company{font-weight:600;}
+.closing{padding:var(--sp-6) 0;text-align:center;border-top:1px solid var(--light-grey);}
+.closing .company{font-weight:600;}
+
+/* Scenario list */
+.scenarios{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--sp-2);}
+.scenarios li{padding-left:20px;position:relative;}
+.scenarios li::before{content:'—';position:absolute;left:0;color:var(--copper);}
+
+/* Next-section link */
+.next-link{margin-top:var(--sp-6);padding-top:var(--sp-3);border-top:1px solid var(--light-grey);}
+.section--dark .next-link{border-top-color:rgba(255,255,255,.22);}
+.next-link .lbl{font-size:11px;color:var(--grey);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;}
+.section--dark .next-link .lbl{color:var(--light-grey);}
+.next-link a{font-size:14.5px;font-weight:600;color:var(--blue);text-decoration:none;}
+.next-link a:hover{text-decoration:underline;}
+.section--dark .next-link a{color:var(--light-blue);}
+
+@media print{
+  .sidebar,.nav-toggle,.nav-scrim,.next-link{display:none!important;}
+  .main{margin-left:0!important;}
+  .section{page-break-inside:avoid;}
+}
+</style>
+</head>
+<body>
+
+<button class="nav-toggle" aria-label="Открыть навигацию" aria-controls="site-sidebar">☰</button>
+<div class="nav-scrim"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="site-sidebar">
+  <a class="sidebar__brand" href="https://bitobe.ru/" target="_blank" rel="noopener" aria-label="BITOBE — на главную">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.18 105.41" aria-hidden="true">
+      <path fill="#182D8D" d="M42.84,104.23H0V1.18H43.72c5.1,0,9.62,.37,13.54,1.1,3.92,.74,7.68,2.01,11.26,3.83,3.58,1.82,6.33,4.49,8.24,8.02,1.91,3.53,2.87,7.85,2.87,12.96,0,10.21-4.12,17.86-12.37,22.97,10.6,3.44,15.9,11.48,15.9,24.14,0,5.69-1.15,10.58-3.46,14.65-2.31,4.07-5.45,7.19-9.42,9.35-3.98,2.16-8.22,3.71-12.74,4.64-4.51,.93-9.42,1.4-14.72,1.4Zm-1.47-86.27H17.81v25.62h25.47c4.81,0,9-.98,12.59-2.94,3.58-1.96,5.38-5.15,5.38-9.57,0-2.85-.54-5.2-1.62-7.07-1.08-1.86-2.68-3.19-4.79-3.98-2.11-.78-4.17-1.32-6.18-1.62-2.01-.29-4.44-.44-7.29-.44Zm1.47,41.81H17.81v27.68h23.85c3.14,0,5.84-.15,8.1-.44,2.26-.29,4.64-.88,7.14-1.77,2.5-.88,4.41-2.33,5.74-4.34,1.33-2.01,1.99-4.59,1.99-7.73,0-3.83-1.25-6.8-3.75-8.91-2.5-2.11-5.15-3.39-7.95-3.83-2.8-.44-6.16-.66-10.08-.66Z"/>
+      <path fill="#182D8D" d="M117.19,104.23h-17.81V1.18h17.81V104.23Z"/>
+      <path fill="#182D8D" d="M162.23,17.96h-34.6V1.18h87.01V17.96h-34.6V104.23h-17.81V17.96Z"/>
+      <path fill="#182D8D" d="M229.37,90.1c-10.11-10.21-15.16-22.67-15.16-37.39s5.13-27.19,15.38-37.39c10.26-10.21,22.7-15.31,37.32-15.31s27.68,5.06,37.69,15.16c10.01,10.11,15.02,22.62,15.02,37.54s-5.08,27.43-15.24,37.54c-10.16,10.11-22.65,15.16-37.47,15.16s-27.43-5.1-37.54-15.31Zm13.03-62.57c-6.43,6.97-9.64,15.36-9.64,25.17s3.29,18.21,9.86,25.17c6.58,6.97,14.67,10.45,24.29,10.45,10.11,0,18.33-3.41,24.66-10.23,6.33-6.82,9.49-15.29,9.49-25.4s-3.26-18.33-9.79-25.25c-6.53-6.92-14.65-10.38-24.37-10.38s-18.09,3.48-24.51,10.45Z"/>
+      <path fill="#182D8D" d="M377.62,104.23h-42.84V1.18h43.72c5.1,0,9.62,.37,13.54,1.1,3.92,.74,7.68,2.01,11.26,3.83,3.58,1.82,6.33,4.49,8.24,8.02,1.91,3.53,2.87,7.85,2.87,12.96,0,10.21-4.12,17.86-12.37,22.97,10.6,3.44,15.9,11.48,15.9,24.14,0,5.69-1.15,10.58-3.46,14.65-2.31,4.07-5.45,7.19-9.42,9.35-3.98,2.16-8.22,3.71-12.74,4.64-4.51,.93-9.42,1.4-14.72,1.4Zm-1.47-86.27h-23.55v25.62h25.47c4.81,0,9-.98,12.59-2.94,3.58-1.96,5.38-5.15,5.38-9.57,0-2.85-.54-5.2-1.62-7.07-1.08-1.86-2.68-3.19-4.79-3.98-2.11-.78-4.17-1.32-6.18-1.62-2.01-.29-4.44-.44-7.29-.44Zm1.47,41.81h-25.03v27.68h23.85c3.14,0,5.84-.15,8.1-.44,2.26-.29,4.64-.88,7.14-1.77,2.5-.88,4.41-2.33,5.74-4.34,1.33-2.01,1.99-4.59,1.99-7.73,0-3.83-1.25-6.8-3.75-8.91-2.5-2.11-5.15-3.39-7.95-3.83-2.8-.44-6.16-.66-10.08-.66Z"/>
+      <path fill="#182D8D" d="M512.18,104.23h-78.03V1.18h76.56V17.96h-58.74v25.91h54.91v16.19h-54.91v27.38h60.21v16.78Z"/>
+    </svg>
+  </a>
+  <p class="sidebar__doc-label">Коммерческое предложение</p>
+  <nav aria-label="Разделы документа">
+    <p class="sidebar__group-label">Предложение</p>
+    <a href="#cover">Обложка</a>
+    <a href="#summary">Суть</a>
+    <a href="#streams">Стримы и цены</a>
+    <a href="#decision">Следующий шаг</a>
+    <p class="sidebar__group-label">Приложения</p>
+    <a href="#premise">Предпосылки</a>
+    <a href="#hypothesis">Гипотеза</a>
+    <a href="#stream1-stages">Стрим 1 · Этапы</a>
+    <a href="#concept-canvas">Концепция</a>
+    <a href="#lab">Лаборатории</a>
+    <a href="#kpi">Оценка эффективности</a>
+    <a href="#stream3-menu">Стрим 2 · Меню форматов</a>
+    <a href="#streams-integration">Интеграция стримов</a>
+    <a href="#results">Результат для НТЦ</a>
+    <a href="#cost">Стоимость (детально)</a>
+  </nav>
+</aside>
+
+<div class="main">
+
+<!-- ОБЛОЖКА -->
+<section id="cover" class="cover">
+  <div class="container">
+    <p class="h1">Клуб руководителей <em>2.0</em></p>
+    <p class="h3">Развитие Клуба как управленческой платформы НТЦ</p>
+    <p class="lead">Клуб уже состоялся как управленческое сообщество — новый этап развития превращает его в платформу, которая закрепляет накопленный опыт и помогает решать задачи НТЦ.</p>
+    <p class="kp-label">Коммерческое предложение BITOBE</p>
+  </div>
+</section>
+
+<!-- СУТЬ -->
+<section id="summary" class="section">
+  <div class="container">
+    <p class="kicker">Суть предложения</p>
+    <h2 class="h1" style="margin-bottom:var(--sp-6);max-width:30ch;">Клуб уже состоялся — вопрос в том, как поднять его на следующий уровень</h2>
+    <div class="grid-2">
+      <div class="stack-3">
+        <p class="body">Клуб руководителей НТЦ существует несколько лет и уже сформировался как самостоятельное управленческое сообщество: собственная миссия и концепция «сообщества равных», устав, председатель, куратор, лидеры четырех треков, поддержка HR и менеджмента, регулярный календарь событий. <a class="inline-link" href="#premise">Полная картина того, что уже есть в Клубе — в приложении «Предпосылки»</a>.</p>
+        <p class="body">Центральная задача проекта — связать развитие Клуба с приоритетами НТЦ, в первую очередь с <strong>повесткой науки и цифровизации</strong>, и определить, какой конкретный вклад Клуб способен в них внести. Наряду с этим — сделать ценность Клуба для менеджмента более измеримой и точнее определить границы менторинга.</p>
+      </div>
+      <div class="rec">
+        <p class="small" style="margin-bottom:var(--sp-2);"><strong>Мы предлагаем рассматривать Клуб как платформу с тремя функциями:</strong></p>
+        <div class="rec__step"><div class="rec__mark">01</div><div class="body"><strong>Сообщество.</strong> Горизонтальные связи, обмен опытом, общий управленческий язык — уже работает, требует сохранения.</div></div>
+        <div class="rec__step"><div class="rec__mark">02</div><div class="body"><strong>Знания.</strong> Перевод опыта участников в кейсы, инструменты и библиотеку решений — чтобы ценность события оставалась в системе.</div></div>
+        <div class="rec__step"><div class="rec__mark">03</div><div class="body"><strong>Решения.</strong> Клуб как пилотная площадка для <a class="inline-link" href="#lab">управленческих лабораторий</a> по реальным задачам НТЦ.</div></div>
+      </div>
+    </div>
+    <div class="next-link"><div class="lbl">Далее</div><a href="#streams">Стримы и цены →</a></div>
+  </div>
+</section>
+
+<!-- СТРИМЫ И ЦЕНЫ -->
+<section id="streams" class="section section--band">
+  <div class="container">
+    <p class="kicker">Два самостоятельных направления работы</p>
+    <h2 class="h1" style="margin-bottom:var(--sp-8);max-width:28ch;">Что входит в каждое направление и сколько это стоит</h2>
+    <div class="stream-row">
+      <div class="stream">
+        <div class="stream__tag">Стрим 1</div>
+        <div class="stream__title">Клуб руководителей 2.0</div>
+        <p class="small">Проектирование целевой модели Клуба 2.0 как платформы: что сохранить, что усилить, как встроить повестку науки и цифровизации — с измеримой ценностью для бизнеса, целевой моделью и дорожной картой.</p>
+        <div class="stream__price">
+          <div class="lbl">Бенчмарк → концепция → сессия</div>
+          <div class="val">1 630 000 руб.</div>
+          <p class="small" style="margin-top:6px;">Бенчмарк — 490 000 · концепция — 490 000 · сессия — 650 000 руб. Доработка концепции по итогам сессии — в рамках проекта.</p>
+        </div>
+        <a class="card-link" href="#stream1-stages">Этапы и что войдёт в концепцию</a>
+      </div>
+      <div class="stream">
+        <div class="stream__tag">Стрим 2</div>
+        <div class="stream__title">Событийное наполнение Клуба</div>
+        <p class="small">Подбор и реализация отдельных форматов под задачи Клуба: управленческие лаборатории, практикумы, дискуссии, мастермайнды, экспертные встречи, менторская программа.</p>
+        <div class="stream__price">
+          <div class="lbl">Вилка по форматам</div>
+          <div class="val">от 150 000 руб.</div>
+          <p class="small" style="margin-top:6px;">Тренинг / лаборатория — от 250 000 · стратегическая сессия — от 650 000 · менторская программа — 1 500 000 · спикер — по запросу.</p>
+        </div>
+        <a class="card-link" href="#stream3-menu">Полное меню форматов</a>
+      </div>
+    </div>
+    <div class="next-link"><div class="lbl">Далее</div><a href="#decision">Следующий шаг →</a></div>
+  </div>
+</section>
+
+<!-- ЧТО НУЖНО РЕШИТЬ -->
+<section id="decision" class="section section--dark">
+  <div class="container">
+    <p class="kicker">Следующий шаг</p>
+    <p class="body" style="max-width:64ch;font-family:var(--serif);font-style:italic;font-size:var(--fs-h3);">Мы готовы совместно определить тот объем работ, который позволит сохранить сильные стороны действующего Клуба и создать реалистичную модель его следующего этапа развития.</p>
+    <div class="sig">
+      <p class="company">BITOBE</p>
+      <p class="small">Руководитель практики «Развитие людей в организации»</p>
+      <p class="small">Александр Пронин</p>
+    </div>
+    <div class="next-link"><div class="lbl">Далее</div><a href="#appendix">Приложения: детализация и полная смета →</a></div>
+  </div>
+</section>
+
+<!-- ПРИЛОЖЕНИЯ: divider -->
+<section id="appendix" class="section section--band section--tight">
+  <div class="container">
+    <p class="kicker">Приложения</p>
+    <h2 class="h2">Детализация по стримам, методология и полная смета</h2>
+    <div class="next-link"><div class="lbl">Начать с</div><a href="#premise">Предпосылки проекта →</a></div>
+  </div>
+</section>
+
+<!-- ПРЕДПОСЫЛКИ -->
+<section id="premise" class="section">
+  <div class="container">
+    <p class="kicker">Предпосылки проекта</p>
+    <h2 class="h1" style="margin-bottom:var(--sp-8);max-width:26ch;">Клуб руководителей уже прошел значительный путь развития — следующий шаг связан с уточнением его роли и ценности для НТЦ</h2>
+    <div class="grid-2">
+      <div class="stack-3">
+        <p class="body">Клуб руководителей НТЦ существует несколько лет и уже сформировался как самостоятельное управленческое сообщество.</p>
+        <p class="body">Сегодня у Клуба есть:</p>
+        <ul class="body" style="padding-left:18px;margin:0;">
+          <li>собственная миссия и концепция «сообщества равных»;</li>
+          <li>устав и сформированная структура управления;</li>
+          <li>председатель, куратор и лидеры четырех треков;</li>
+          <li>поддержка HR и менеджмента;</li>
+          <li>регулярный календарь событий;</li>
+          <li>собственная идентичность и узнаваемость внутри компании.</li>
+        </ul>
+        <p class="body">Клуб прошел путь от площадки для общения выпускников управленческих программ до устойчивого сообщества руководителей с собственным активом и набором регулярных форматов.</p>
+      </div>
+      <div class="stack-3">
+        <p class="body">При этом возникает запрос на следующий этап развития:</p>
+        <ul class="body" style="padding-left:18px;margin:0;">
+          <li>еще раз определить роль Клуба в системе управления и развития НТЦ;</li>
+          <li>сохранить то, что уже доказало свою ценность;</li>
+          <li>понять, какие механики требуют усиления или пересмотра;</li>
+          <li>связать работу Клуба с актуальными приоритетами НТЦ, в том числе с повестками науки и цифровизации;</li>
+          <li>сделать ценность Клуба для менеджмента более понятной и измеримой;</li>
+          <li>определить принципы развития Клуба на следующий период.</li>
+        </ul>
+        <p class="body">Отдельным вопросом является развитие менторинга: необходимо точнее определить роли, границы ответственности и правила взаимодействия менторов и менти.</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:var(--sp-8);">
+      <p class="body" style="font-family:var(--serif);font-style:italic;font-size:var(--fs-h3);">Мы предлагаем не пересобирать работающий Клуб с нуля, а помочь сложившемуся сообществу перейти на следующий этап зрелости.</p>
+    </div>
+    <div class="next-link"><div class="lbl">Далее</div><a href="#hypothesis">Ключевая гипотеза →</a></div>
+  </div>
+</section>
+
+<!-- КЛЮЧЕВАЯ ГИПОТЕЗА -->
+<section id="hypothesis" class="section section--band">
+  <div class="container">
+    <p class="kicker">Ключевая гипотеза</p>
+    <h2 class="h1" style="margin-bottom:var(--sp-2);">Клуб руководителей 2.0 — единая внутренняя управленческая платформа НТЦ</h2>
+    <p class="body" style="margin-bottom:var(--sp-8);max-width:60ch;">Клуб может одновременно выполнять три взаимосвязанные функции.</p>
+    <div class="grid-3">
+      <div class="card" style="background:var(--white);">
+        <div class="card__label">01 · Сообщество</div>
+        <p class="h3" style="margin-bottom:var(--sp-2);">Поддерживать и развивать управленческое сообщество</p>
+        <ul>
+          <li>Горизонтальные связи</li>
+          <li>Обмен опытом</li>
+          <li>Безопасная среда общения</li>
+          <li>Общий управленческий язык</li>
+          <li>Развитие руководителей</li>
+          <li>Связь менеджмента с руководителями разных уровней</li>
+        </ul>
+        <p class="small" style="margin-top:var(--sp-2);">Эта функция уже существует и является ценностью Клуба — ее необходимо сохранить.</p>
+      </div>
+      <div class="card" style="background:var(--white);">
+        <div class="card__label">02 · Знания</div>
+        <p class="h3" style="margin-bottom:var(--sp-2);">Сохранять и тиражировать управленческий опыт</p>
+        <p class="small" style="margin-bottom:var(--sp-1);">Перевод опыта участников в:</p>
+        <ul>
+          <li>кейсы</li>
+          <li>инструменты</li>
+          <li>управленческие практики</li>
+          <li>шаблоны</li>
+          <li>памятки</li>
+          <li>видео</li>
+          <li>библиотеку решений</li>
+        </ul>
+        <p class="small" style="margin-top:var(--sp-2);">Ценность события остается в системе и становится доступна более широкому кругу руководителей.</p>
+      </div>
+      <div class="card" style="background:var(--white);">
+        <div class="card__label">03 · Решения</div>
+        <p class="h3" style="margin-bottom:var(--sp-2);">Запускать решения для реальных задач НТЦ</p>
+        <p class="small" style="margin-bottom:var(--sp-1);">Клуб становится безопасной пилотной площадкой, на которой можно:</p>
+        <ul>
+          <li>обсуждать новые управленческие подходы</li>
+          <li>тестировать решения</li>
+          <li>собирать межфункциональные команды</li>
+          <li>работать с приоритетными темами науки и цифровизации</li>
+          <li>запускать короткие <a class="inline-link" href="#lab">лаборатории решений</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="body" style="margin-top:var(--sp-8);font-family:var(--serif);font-style:italic;font-size:var(--fs-h3);max-width:56ch;">Таким образом, развитие Клуба происходит не за счет увеличения количества мероприятий, а за счет расширения его роли в управленческой системе НТЦ.</p>
+    <div class="next-link"><div class="lbl">Далее</div><a href="#stream1-stages">Стрим 1 · Этапы проекта →</a></div>
+  </div>
+</section>
+
+<!-- СТРИМ 1 — СТРУКТУРА ПРОЕКТА -->
+<section id="stream1-stages" class="section">
+  <div class="container">
+    <p class="kicker">Стрим 1 · Структура проекта «Клуб руководителей 2.0»</p>
+    <h2 class="h1" style="margin-bottom:var(--sp-8);max-width:28ch;">От анализа накопленного опыта — к целевой модели Клуба и дорожной карте развития</h2>
+    <div class="tl">
+      <div class="tl__step">
+        <div class="tl__meta">Этап 1<br>~1 неделя</div>
+        <div>
+          <div class="tl__title">Внешний бенчмарк</div>
+          <p class="body" style="margin-bottom:var(--sp-2);">Анализ российских и зарубежных практик развития внутренних профессиональных и управленческих сообществ.</p>
+          <p class="small" style="margin-bottom:4px;"><strong>Фокус анализа:</strong> роль сообщества для бизнеса; модели управления; роли лидеров и актива; механики вовлечения; работа с корпоративными знаниями; менторинг; место науки и цифровизации в работе сообщества; проектные и лабораторные форматы; модели оценки эффективности.</p>
+          <p class="small" style="margin-bottom:4px;"><strong>Результат:</strong> аналитическая база и ориентиры для проектирования концепции — представляется на сессии вместе с концепцией.</p>
+          <p class="small"><strong>Стоимость:</strong> 490 000 руб.</p>
+        </div>
+      </div>
+      <div class="tl__step">
+        <div class="tl__meta">Этап 2<br>~3 недели</div>
+        <div>
+          <span class="tl__badge" style="color:var(--blue);">Основной этап</span>
+          <div class="tl__title">Проектирование концепции «Клуб руководителей 2.0»</div>
+          <p class="body" style="margin-bottom:var(--sp-2);">Разработка целевой модели Клуба руководителей на основе бенчмарка — с учётом повестки науки и цифровизации НТЦ.</p>
+          <p class="small" style="margin-bottom:4px;"><strong>В объём работ входят:</strong> 3 интервью с действующими членами Клуба; проектирование модели менторинга (роли, критерии выбора менторов, границы роли ментора и непосредственного руководителя, сценарии взаимодействия) как часть концепции — проведение программы по этой модели остаётся отдельной опциональной услугой.</p>
+          <p class="small" style="margin-bottom:4px;"><strong>Результат:</strong> целевая модель Клуба — для обсуждения на сессии.</p>
+          <p class="small"><strong>Стоимость:</strong> 490 000 руб.</p>
+        </div>
+      </div>
+      <div class="tl__step">
+        <div class="tl__meta">Этап 3<br>~1 неделя</div>
+        <div>
+          <div class="tl__title">Сессия</div>
+          <p class="body" style="margin-bottom:var(--sp-2);">Совместное обсуждение результатов бенчмарка и концепции с командой НТЦ.</p>
+          <p class="small" style="margin-bottom:4px;"><strong>Результат:</strong> результаты бенчмарка и концепция представлены и обсуждены с командой НТЦ; согласованные направления для доработки.</p>
+          <p class="small"><strong>Стоимость:</strong> 650 000 руб.</p>
+        </div>
+      </div>
+      <div class="tl__step">
+        <div class="tl__meta">Этап 4<br>~2 недели</div>
+        <div>
+          <div class="tl__title">Доработка концепции по итогам сессии</div>
+          <p class="body" style="margin-bottom:var(--sp-2);">Финализация целевой модели Клуба с учётом обсуждения на сессии.</p>
+          <p class="small"><strong>Результат:</strong> целевая модель Клуба — что сохранить, что изменить, что добавить, включая место науки и цифровизации, — и дорожная карта её реализации.</p>
+        </div>
+      </div>
+    </div>
+    <div class="next-link"><div class="lbl">Далее</div><a href="#concept-canvas">Что войдёт в концепцию →</a></div>
+  </div>
+</section>
+
+<!-- ЧТО ВОЙДЕТ В КОНЦЕПЦИЮ -->
+<section id="concept-canvas" class="section section--band">
+  <div class="container">
+    <p class="kicker">Стрим 1 · Содержание концепции</p>
+    <h2 class="h1" style="margin-bottom:var(--sp-8);max-width:30ch;">Концепция задаст общую логику работы Клуба — от бизнес-роли до конкретных механизмов</h2>
+    <div class="numbered">
+      <div class="numbered__item"><div class="numbered__n">01</div><div><div class="h3" style="margin-bottom:4px;">Роль Клуба</div><p class="body">Зачем Клуб существует для НТЦ и какую ценность создает.</p></div></div>
+      <div class="numbered__item"><div class="numbered__n">02</div><div><div class="h3" style="margin-bottom:4px;">Цели и задачи</div><p class="body">Какие задачи решаются через Клуб, а какие находятся за его пределами.</p></div></div>
+      <div class="numbered__item"><div class="numbered__n">03</div><div><div class="h3" style="margin-bottom:4px;">Участники</div><p class="body">Для кого существует Клуб, кто входит в ядро, кто подключается к отдельным форматам.</p></div></div>
+      <div class="numbered__item"><div class="numbered__n">04</div><div><div class="h3" style="margin-bottom:4px;">Роли и управление</div><p class="body">Спонсор, председатель, куратор, лидеры треков, актив, заказчики, участники.</p></div></div>
+      <div class="numbered__item"><div class="numbered__n">05</div><div><div class="h3" style="margin-bottom:4px;">Архитектура треков</div><p class="body">Какие направления необходимо сохранить, изменить или дополнить.</p></div></div>
+      <div class="numbered__item"><div class="numbered__n">06</div><div><div class="h3" style="margin-bottom:4px;">Форматы работы</div><p class="body">События, мастермайнды, дискуссии, <a class="inline-link" href="#lab">лаборатории решений</a>, менторинг, проектные механики.</p></div></div>
+      <div class="numbered__item"><div class="numbered__n">07</div><div><div class="h3" style="margin-bottom:4px;">Наука и цифровизация</div><p class="body">Как приоритетные повестки НТЦ могут проходить через работу Клуба без превращения его в функциональное подразделение.</p></div></div>
+      <div class="numbered__item"><div class="numbered__n">08</div><div><div class="h3" style="margin-bottom:4px;">Сохранение знаний</div><p class="body">Какие артефакты остаются после работы Клуба и как они становятся доступными другим руководителям.</p></div></div>
+      <div class="numbered__item"><div class="numbered__n">09</div><div><div class="h3" style="margin-bottom:4px;">Принципы и ритуалы</div><p class="body">Правила участия, регулярность, способы принятия решений, механизмы инициативности.</p></div></div>
+      <div class="numbered__item"><div class="numbered__n">10</div><div><div class="h3" style="margin-bottom:4px;">Оценка эффективности</div><p class="body">Разные типы метрик для разных типов активности — <a class="inline-link" href="#kpi">подход к оценке</a>.</p></div></div>
+      <div class="numbered__item"><div class="numbered__n">11</div><div><div class="h3" style="margin-bottom:4px;">Дорожная карта</div><p class="body">Приоритеты развития Клуба на следующий период.</p></div></div>
+      <div class="numbered__item"><div class="numbered__n">12</div><div><div class="h3" style="margin-bottom:4px;">Модель менторинга</div><p class="body">Роли ментора и менти, критерии выбора, границы ответственности, сценарии взаимодействия — как часть концепции; проведение программы по этой модели — отдельная опциональная услуга.</p></div></div>
+    </div>
+    <div class="next-link"><div class="lbl">Далее</div><a href="#lab">Гипотеза: управленческие лаборатории →</a></div>
+  </div>
+</section>
+
+<!-- ГИПОТЕЗА: УПРАВЛЕНЧЕСКИЕ ЛАБОРАТОРИИ -->
+<section id="lab" class="section">
+  <div class="container">
+    <p class="kicker">Один из возможных новых механизмов Клуба руководителей 2.0</p>
+    <h2 class="h1" style="margin-bottom:var(--sp-2);max-width:30ch;">От обсуждения управленческих тем — к совместному поиску решений для НТЦ</h2>
+    <p class="body" style="margin-bottom:var(--sp-6);max-width:64ch;">Управленческая лаборатория — короткий проектный формат, в котором межфункциональная группа руководителей работает над конкретным вызовом НТЦ и формирует практически применимое решение.</p>
+    <p class="small" style="margin-bottom:var(--sp-2);"><strong>Возможная логика лаборатории:</strong></p>
+    <div class="flow">
+      <div class="flow__step"><span class="n">01</span><div class="t">Вызов</div><div class="d">Менеджмент или участники Клуба формулируют реальную задачу.</div></div>
+      <div class="flow__step"><span class="n">02</span><div class="t">Погружение</div><div class="d">Участники изучают контекст, ограничения, данные и существующие практики.</div></div>
+      <div class="flow__step"><span class="n">03</span><div class="t">Совместная работа</div><div class="d">Межфункциональная команда формирует варианты решения.</div></div>
+      <div class="flow__step"><span class="n">04</span><div class="t">Экспертиза</div><div class="d">При необходимости подключаются внутренние или внешние эксперты.</div></div>
+      <div class="flow__step"><span class="n">05</span><div class="t">Решение</div><div class="d">Команда собирает практическое предложение, прототип, набор рекомендаций или пилот.</div></div>
+      <div class="flow__step"><span class="n">06</span><div class="t">Диалог с заказчиком</div><div class="d">Результат обсуждается с владельцем задачи или менеджментом.</div></div>
+    </div>
+    <div class="grid-2" style="margin-top:var(--sp-8);align-items:start;">
+      <div>
+        <p class="small" style="margin-bottom:6px;"><strong>Возможные темы:</strong></p>
+        <ul class="body" style="padding-left:18px;margin:0;">
+          <li>внедрение цифровых инструментов</li>
+          <li>новые способы работы с научной повесткой</li>
+          <li>межфункциональное взаимодействие</li>
+          <li>управленческие практики</li>
+          <li>развитие партнерств</li>
+          <li>применение ИИ</li>
+          <li>повышение эффективности процессов</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p class="small">Важно: это гипотеза формата. Конкретная роль лабораторий определяется в рамках разработки концепции Клуба.</p>
+      </div>
+    </div>
+    <div class="next-link"><div class="lbl">Далее</div><a href="#kpi">Подход к оценке эффективности →</a></div>
+  </div>
+</section>
+
+<!-- ОЦЕНКА ЭФФЕКТИВНОСТИ -->
+<section id="kpi" class="section section--band">
+  <div class="container">
+    <p class="kicker">Подход к оценке эффективности Клуба</p>
+    <h2 class="h1" style="margin-bottom:var(--sp-8);max-width:30ch;">Разные активности Клуба требуют разных критериев эффективности</h2>
+    <div class="grid-3">
+      <div class="level" style="background:var(--white);">
+        <span class="level__n">Уровень 1</span>
+        <p class="h3" style="margin-bottom:var(--sp-2);">Здоровье сообщества</p>
+        <ul>
+          <li>активное ядро</li>
+          <li>повторное участие</li>
+          <li>инициативность участников</li>
+          <li>количество активностей, инициированных самим сообществом</li>
+          <li>оценка ценности участия</li>
+          <li>качество горизонтальных связей</li>
+        </ul>
+      </div>
+      <div class="level" style="background:var(--white);">
+        <span class="level__n">Уровень 2</span>
+        <p class="h3" style="margin-bottom:var(--sp-2);">Развитие руководителей</p>
+        <ul>
+          <li>использование новых управленческих практик</li>
+          <li>обмен опытом</li>
+          <li>менторская активность</li>
+          <li>использование материалов и кейсов Клуба</li>
+          <li>самооценка полезности полученного опыта</li>
+        </ul>
+      </div>
+      <div class="level" style="background:var(--white);">
+        <span class="level__n">Уровень 3</span>
+        <p class="h3" style="margin-bottom:var(--sp-2);">Бизнес-вклад</p>
+        <p class="small" style="margin-bottom:var(--sp-2);">Применяется не ко всем событиям, а к форматам, которые работают с конкретными задачами.</p>
+        <ul>
+          <li>разработанные решения</li>
+          <li>запущенные пилоты</li>
+          <li>внедренные инициативы</li>
+          <li>решенные межфункциональные задачи</li>
+          <li>созданные и тиражированные практики</li>
+        </ul>
+      </div>
+    </div>
+    <p class="body" style="margin-top:var(--sp-8);max-width:64ch;font-family:var(--serif);font-style:italic;font-size:var(--fs-h3);">Не каждое событие Клуба обязано иметь прямой финансовый ROI. Задача модели оценки — разделить здоровье сообщества, развитие участников и вклад отдельных инициатив в задачи НТЦ.</p>
+    <div class="next-link"><div class="lbl">Далее</div><a href="#stream3-menu">Стрим 2 · Меню форматов →</a></div>
+  </div>
+</section>
+
+
+<!-- СТРИМ 2 — СОБЫТИЙНОЕ НАПОЛНЕНИЕ -->
+<section id="stream3-menu" class="section">
+  <div class="container">
+    <p class="kicker">Стрим 2 · Событийное наполнение Клуба</p>
+    <h2 class="h1" style="margin-bottom:var(--sp-3);max-width:32ch;">Меню форматов, из которых может собираться программа Клуба под утвержденные цели</h2>
+    <p class="body" style="margin-bottom:var(--sp-8);max-width:64ch;">Пока целевая концепция Клуба руководителей 2.0 не согласована, мы не предлагаем фиксировать годовой календарь. BITOBE может подключаться к отдельным форматам и помогать наполнять Клуб мероприятиями под конкретные задачи.</p>
+    <div class="grid-3">
+      <div class="card">
+        <div class="h3" style="margin-bottom:6px;">Управленческая лаборатория</div>
+        <p class="small" style="margin-bottom:6px;"><strong>Для чего:</strong> проработка конкретной задачи НТЦ межфункциональной группой руководителей.</p>
+        <p class="small" style="margin-bottom:10px;"><strong>Результат:</strong> варианты решения, рекомендации, прототип или план пилота.</p>
+        <p class="small">от 250 000 руб.<br>Финальная стоимость зависит от подготовки кейса и длительности работы.</p>
+      </div>
+      <div class="card">
+        <div class="h3" style="margin-bottom:6px;">Тренинг / практикум</div>
+        <p class="small" style="margin-bottom:6px;"><strong>Для чего:</strong> освоение и отработка конкретного управленческого инструментария.</p>
+        <p class="small" style="margin-bottom:10px;"><strong>Возможные темы:</strong> сложные разговоры; обратная связь; принятие решений; работа с неопределенностью; партнерства; управление командой; влияние; ИИ для руководителя.</p>
+        <p class="small">от 250 000 руб. за тренинг-день.</p>
+      </div>
+      <div class="card">
+        <div class="h3" style="margin-bottom:6px;">Вебинар / экспертная встреча</div>
+        <p class="small" style="margin-bottom:10px;"><strong>Для чего:</strong> быстрое знакомство с новой темой, подходом или практикой.</p>
+        <p class="small">от 150 000 руб.</p>
+      </div>
+      <div class="card">
+        <div class="h3" style="margin-bottom:6px;">Дискуссия / мастермайнд</div>
+        <p class="small" style="margin-bottom:10px;"><strong>Для чего:</strong> обмен управленческим опытом и работа с реальными кейсами участников.</p>
+        <p class="small">от 150 000 руб.</p>
+      </div>
+      <div class="card">
+        <div class="h3" style="margin-bottom:6px;">Мотивационный или отраслевой спикер</div>
+        <p class="small" style="margin-bottom:10px;">Подбор внешнего эксперта под конкретную тему.</p>
+        <p class="small">по запросу.</p>
+      </div>
+      <div class="card">
+        <div class="h3" style="margin-bottom:6px;">Стратегическая / фасилитационная сессия</div>
+        <p class="small" style="margin-bottom:10px;"><strong>Для чего:</strong> совместная работа с задачей, требующей согласования позиций и выработки решений.</p>
+        <p class="small">от 650 000 руб.</p>
+      </div>
+      <div class="card">
+        <div class="h3" style="margin-bottom:6px;">Менторская программа</div>
+        <p class="small" style="margin-bottom:6px;"><strong>Для чего:</strong> системная передача управленческого опыта — а не разовые встречи ментора с менти.</p>
+        <p class="small" style="margin-bottom:10px;"><strong>Возможный формат реализации:</strong> четырёхмесячный цикл — подготовка менторов и менти, запуск пар, супервизии, завершающее мероприятие.</p>
+        <p class="small">1 500 000 руб. за полный цикл.</p>
+        <a class="card-link" href="#stream2-context">Контекст, архитектура и результат</a>
+      </div>
+    </div>
+    <div class="next-link"><div class="lbl">Далее</div><a href="#stream2-context">Менторская программа: контекст →</a></div>
+  </div>
+</section>
+
+<!-- СТРИМ 2 — КОНТЕКСТ -->
+<section id="stream2-context" class="section section--dark">
+  <div class="container">
+    <p class="kicker">Менторская программа · Контекст</p>
+    <h2 class="h1" style="margin-bottom:var(--sp-8);max-width:32ch;">Менторинг как управляемая система передачи опыта, а не только серия встреч руководителей и менти</h2>
+    <div class="grid-2">
+      <div class="stack-3">
+        <p class="body">Развитие менторинга уже является одной из практик Клуба.</p>
+        <p class="body">Модель менторинга — роли, критерии выбора менторов, границы ответственности, сценарии взаимодействия — проектируется на этапе концепции (Стрим 1). Здесь описана программа её проведения.</p>
+      </div>
+      <div class="card">
+        <p class="body">Периметр конкретного запуска — только Клуб руководителей или более широкий круг руководителей НТЦ — определяется на старте программы, на основе модели, спроектированной в концепции.</p>
+      </div>
+    </div>
+    <div class="next-link"><div class="lbl">Далее</div><a href="#mentoring-architecture">Архитектура программы →</a></div>
+  </div>
+</section>
+
+<!-- АРХИТЕКТУРА МЕНТОРСКОЙ ПРОГРАММЫ -->
+<section id="mentoring-architecture" class="section">
+  <div class="container">
+    <p class="kicker">Менторская программа · Архитектура</p>
+    <h2 class="h1" style="margin-bottom:var(--sp-3);max-width:32ch;">Четырехмесячный цикл: подготовка → запуск → практика → сопровождение → рефлексия</h2>
+    <p class="small" style="margin-bottom:var(--sp-6);">Один из возможных форматов реализации — конкретная программа уточняется по итогам разработки концепции.</p>
+    <div class="tl">
+      <div class="tl__step">
+        <div class="tl__meta">Этап 1</div>
+        <div>
+          <div class="tl__title">Подготовка менторов</div>
+          <p class="small" style="margin-bottom:4px;">Два обучающих мероприятия.</p>
+          <p class="small">Содержание: роль ментора; отличие менторинга от наставничества, коучинга и управления; границы роли; работа с запросом менти; структура менторской встречи; вопросы и развивающая обратная связь; работа со сложными ситуациями; этические и карьерные границы; завершение взаимодействия.</p>
+        </div>
+      </div>
+      <div class="tl__step">
+        <div class="tl__meta">Этап 2</div>
+        <div>
+          <div class="tl__title">Подготовка менти</div>
+          <p class="small" style="margin-bottom:4px;">Одно обучающее мероприятие.</p>
+          <p class="small">Содержание: роль и ответственность менти; формирование запроса; выбор цели; ожидания от ментора; подготовка к встречам; фиксация договоренностей; границы роли ментора; перевод рекомендаций в собственные действия.</p>
+        </div>
+      </div>
+      <div class="tl__step">
+        <div class="tl__meta">Этап 3</div>
+        <div>
+          <div class="tl__title">Старт менторской программы</div>
+          <p class="small" style="margin-bottom:4px;">Совместное очное мероприятие.</p>
+          <p class="small">Задачи: зафиксировать правила программы; познакомить участников; сформировать единое понимание ролей; сформировать / запустить пары; заключить рабочий менторский контракт; сформировать запросы и цели.</p>
+        </div>
+      </div>
+      <div class="tl__step">
+        <div class="tl__meta">Этап 4<br>~4 месяца</div>
+        <div>
+          <div class="tl__title">Работа менторских пар</div>
+          <p class="small">Участники самостоятельно проводят регулярные менторские встречи по согласованной модели.</p>
+        </div>
+      </div>
+      <div class="tl__step">
+        <div class="tl__meta">Этап 5</div>
+        <div>
+          <div class="tl__title">Супервизии для менторов</div>
+          <p class="small" style="margin-bottom:4px;">В течение программы провести поддерживающие онлайн-сессии.</p>
+          <p class="small" style="margin-bottom:4px;">Фокус: разбор сложных ситуаций; границы роли; динамика взаимодействия; обмен практиками; работа с затруднениями; поддержка менторов.</p>
+          <p class="small">Рабочая гипотеза: 2 онлайн-супервизии в течение цикла.</p>
+        </div>
+      </div>
+      <div class="tl__step">
+        <div class="tl__meta">Этап 6</div>
+        <div>
+          <div class="tl__title">Завершающее мероприятие</div>
+          <p class="small" style="margin-bottom:4px;">Совместная очная встреча.</p>
+          <p class="small">Задачи: подвести итоги; собрать опыт; проанализировать практики; отметить вклад участников; определить дальнейшие шаги; сформировать рекомендации по следующему циклу.</p>
+        </div>
+      </div>
+    </div>
+    <div class="next-link"><div class="lbl">Далее</div><a href="#mentoring-result">Результат менторской программы →</a></div>
+  </div>
+</section>
+
+<!-- РЕЗУЛЬТАТ МЕНТОРСКОГО СТРИМА -->
+<section id="mentoring-result" class="section section--band">
+  <div class="container">
+    <p class="kicker">Менторская программа · Результат</p>
+    <h2 class="h1" style="margin-bottom:var(--sp-8);max-width:32ch;">На выходе НТЦ получает не только проведенный цикл, но и воспроизводимую модель менторинга</h2>
+    <div class="grid-3">
+      <div class="card" style="background:var(--white);">
+        <div class="card__label">Для системы</div>
+        <ul>
+          <li>понятная архитектура менторской программы</li>
+          <li>описанные роли ментора и менти</li>
+          <li>правила и границы взаимодействия</li>
+          <li>сценарий жизненного цикла менторской пары</li>
+          <li>методические материалы</li>
+          <li>подход к сопровождению и супервизии</li>
+          <li>рекомендации по развитию следующих циклов</li>
+        </ul>
+      </div>
+      <div class="card" style="background:var(--white);">
+        <div class="card__label">Для менторов</div>
+        <ul>
+          <li>понимание роли</li>
+          <li>практические инструменты</li>
+          <li>границы ответственности</li>
+          <li>поддержка во время реальной работы</li>
+        </ul>
+      </div>
+      <div class="card" style="background:var(--white);">
+        <div class="card__label">Для менти</div>
+        <ul>
+          <li>умение формулировать запрос</li>
+          <li>понимание своей ответственности</li>
+          <li>правила работы с ментором</li>
+          <li>перевод полученного опыта в действия</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:var(--sp-8);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:var(--sp-3);">
+      <p class="small" style="max-width:44ch;">Точный состав мероприятий и количество участников уточняются на этапе контрактования.</p>
+      <div style="text-align:right;">
+        <p class="small" style="margin-bottom:2px;">Стоимость четырехмесячной менторской программы</p>
+        <p class="h2" style="font-family:var(--serif);font-style:italic;color:var(--copper);">1 500 000 руб.</p>
+      </div>
+    </div>
+    <div class="next-link"><div class="lbl">Далее</div><a href="#streams-integration">Как всё собирается в систему →</a></div>
+  </div>
+</section>
+
+<!-- КАК ТРИ СТРИМА СОБИРАЮТСЯ В ЕДИНУЮ СИСТЕМУ -->
+<section id="streams-integration" class="section section--dark">
+  <div class="container">
+    <p class="kicker">Как всё собирается в единую систему</p>
+    <h2 class="h1" style="margin-bottom:var(--sp-8);max-width:32ch;">Архитектура → ключевые механизмы → живая практика Клуба</h2>
+    <div class="vflow">
+      <div class="vflow__block">
+        <div class="vflow__label">Концепция Клуба 2.0</div>
+        <p class="body">отвечает на вопросы: зачем; для кого; какие задачи; какая структура; какие механизмы; как измеряем результат.</p>
+      </div>
+      <div class="vflow__arrow">↓</div>
+      <div class="vflow__block">
+        <div class="vflow__label">Событийное наполнение Клуба</div>
+        <p class="body">лаборатории, менторинг и другие форматы обеспечивают регулярную жизнь Клуба и позволяют работать с актуальными задачами НТЦ.</p>
+      </div>
+    </div>
+    <p class="body" style="margin-top:var(--sp-8);text-align:center;font-family:var(--serif);font-style:italic;font-size:var(--fs-h3);">При этом каждый стрим может быть реализован самостоятельно.</p>
+    <div class="next-link"><div class="lbl">Далее</div><a href="#results">Результат для НТЦ →</a></div>
+  </div>
+</section>
+
+<!-- РЕЗУЛЬТАТ ДЛЯ НТЦ -->
+<section id="results" class="section">
+  <div class="container">
+    <p class="kicker">Результат для НТЦ</p>
+    <h2 class="h1" style="margin-bottom:var(--sp-8);">Развитие Клуба без потери того, что уже работает</h2>
+    <div class="grid-2">
+      <div class="stream">
+        <div class="h3" style="margin-bottom:6px;">Сохранена и усилена идентичность Клуба</div>
+        <p class="body">Клуб продолжает оставаться уникальным сообществом руководителей НТЦ и «сообществом равных».</p>
+      </div>
+      <div class="stream">
+        <div class="h3" style="margin-bottom:6px;">Прояснена его роль для бизнеса</div>
+        <p class="body">Понятно, какие задачи Клуб берет на себя и какую ценность создает для участников и менеджмента.</p>
+      </div>
+      <div class="stream">
+        <div class="h3" style="margin-bottom:6px;">Появляются новые механизмы</div>
+        <p class="body">Лаборатории решений, сохранение знаний, менторинг и другие форматы связывают сообщество с задачами НТЦ.</p>
+      </div>
+      <div class="stream">
+        <div class="h3" style="margin-bottom:6px;">Появляется дорожная карта</div>
+        <p class="body">Клуб получает реалистичные приоритеты развития на следующий период вместо простого расширения календаря мероприятий.</p>
+      </div>
+    </div>
+    <div class="next-link"><div class="lbl">Далее</div><a href="#cost">Полная смета →</a></div>
+  </div>
+</section>
+
+<!-- СТОИМОСТЬ (ДЕТАЛЬНО) -->
+<section id="cost" class="section section--band">
+  <div class="container">
+    <p class="kicker">Инвестиции</p>
+    <h2 class="h1" style="margin-bottom:var(--sp-8);">Стоимость работ</h2>
+
+    <p class="h3" style="margin-bottom:var(--sp-2);">Стрим 1. Клуб руководителей 2.0</p>
+    <table class="table" style="margin-bottom:var(--sp-8);">
+      <thead><tr><th>Этап</th><th class="num">Стоимость</th></tr></thead>
+      <tbody>
+        <tr><td>Внешний бенчмарк</td><td class="price">490 000 руб.</td></tr>
+        <tr><td>Проектирование концепции</td><td class="price">490 000 руб.</td></tr>
+        <tr><td>Сессия</td><td class="price">650 000 руб.</td></tr>
+        <tr><td>Доработка концепции по итогам сессии</td><td class="price">—</td></tr>
+        <tr><td>Итого по стриму 1</td><td class="price">1 630 000 руб.</td></tr>
+      </tbody>
+    </table>
+
+    <p class="h3" style="margin-bottom:var(--sp-2);">Стрим 2. Событийное наполнение</p>
+    <p class="small" style="margin-bottom:var(--sp-2);">Стоимость рассчитывается исходя из выбранных форматов.</p>
+    <table class="table" style="margin-bottom:var(--sp-4);">
+      <tbody>
+        <tr><td>Вебинар / экспертная встреча</td><td class="price">от 150 000 руб.</td></tr>
+        <tr><td>Дискуссия / мастермайнд</td><td class="price">от 150 000 руб.</td></tr>
+        <tr><td>Тренинг / практикум</td><td class="price">от 250 000 руб.</td></tr>
+        <tr><td>Управленческая лаборатория</td><td class="price">от 250 000 руб.</td></tr>
+        <tr><td>Мотивационный спикер</td><td class="price">по запросу</td></tr>
+        <tr><td>Стратегическая / фасилитационная сессия</td><td class="price">от 650 000 руб.</td></tr>
+        <tr><td>Менторская программа (полный цикл)</td><td class="price">1 500 000 руб.</td></tr>
+      </tbody>
+    </table>
+    <p class="small">Условия налогообложения, логистика, аренда площадок и дополнительные внешние расходы фиксируются в финальной смете проекта.</p>
+    <div class="next-link"><div class="lbl">Вернуться к</div><a href="#decision">Разделу «Следующий шаг» →</a></div>
+  </div>
+</section>
+
+<!-- ЗАКРЫТИЕ -->
+<footer class="closing">
+  <p class="company">BITOBE</p>
+  <p class="small">© BITOBE, 2026 · ООО «Бизнес для Бизнеса»</p>
+</footer>
+
+</div><!-- /.main -->
+
+<script>
+(function(){
+  var toggle=document.querySelector('.nav-toggle');
+  var sidebar=document.getElementById('site-sidebar');
+  var scrim=document.querySelector('.nav-scrim');
+  function closeNav(){sidebar.classList.remove('is-open');scrim.classList.remove('is-open');}
+  function openNav(){sidebar.classList.add('is-open');scrim.classList.add('is-open');}
+  if(toggle){toggle.addEventListener('click',function(){sidebar.classList.contains('is-open')?closeNav():openNav();});}
+  if(scrim){scrim.addEventListener('click',closeNav);}
+  var navLinks=Array.prototype.slice.call(sidebar.querySelectorAll('a[href^="#"]'));
+  navLinks.forEach(function(a){a.addEventListener('click',closeNav);});
+
+  var map={};
+  navLinks.forEach(function(a){map[a.getAttribute('href').slice(1)]=a;});
+  var targets=Object.keys(map).map(function(id){return document.getElementById(id);}).filter(Boolean);
+  if('IntersectionObserver' in window){
+    var obs=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting)return;
+        var a=map[entry.target.id];
+        if(!a)return;
+        navLinks.forEach(function(l){l.classList.remove('is-active');});
+        a.classList.add('is-active');
+      });
+    },{rootMargin:'-35% 0px -55% 0px',threshold:0});
+    targets.forEach(function(t){obs.observe(t);});
+  }
+})();
+</script>
+
+</body>
+</html>
